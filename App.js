@@ -1,3 +1,4 @@
+// import npms and stuffs that we need
 import React from "react";
 import {
   StyleSheet,
@@ -10,6 +11,7 @@ import {
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { StackNavigator } from "react-navigation";
 
+// make getData() to be async so it can render the json data 
 async function getData() {
   const data = await fetch(
     "https://devccc.assuredperformance.net/react_test.php"
@@ -17,6 +19,11 @@ async function getData() {
   return await data.json();
 }
 
+// we have to make a function that can loop through each button (TouchableHighlight)
+// function here - instead of doing {feed[2][3]} to our text we need to set to some
+// function call that brings json data from fillpage array (avoid drawpage) to the 4th index
+
+// create filterFeed for draw page section
 const filterFeed = array => {
   return array.filter(element => element[0] === "drawpage");
 };
@@ -55,7 +62,7 @@ class ScreenOne extends React.Component {
       .then(data => data.map(element => feed.push(element)))
       .then(res => filterFeed(feed))
       .then(res => matchPage(res, feed))
-      .then(res => console.log(res[0].elements, res[1].elements))
+      .then(res => console.log("Feed Section:", feed, "Testing for res[0].elements:", res[0].elements,"Testing for res[2].elements:", res[1].elements))
       .then(res => this.setState({ status: true }))
       .catch(err => alert("An error occurred"));
   }
